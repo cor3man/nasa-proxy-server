@@ -1,4 +1,5 @@
 const axios = require('axios');
+const express = require('express');
 const { format, addDays, startOfWeek, endOfWeek } = require('date-fns');
 require('dotenv').config();
 
@@ -12,6 +13,11 @@ if (!NASA_API_KEY || !NASA_API_NEO_URL) {
   process.exit(1); 
 }
 
+const app = express();
+const PORT = 4000;
+app.listen(PORT, () => {
+  console.log('The server is running on port ${PORT}');
+});
 
 const today = new Date();
 const startDate = startOfWeek(today, { weekStartsOn: 1 });
@@ -21,9 +27,6 @@ const formattedStartDate = format(startDate, 'yyyy-MM-dd');
 const formattedEndDate = format(endDate, 'yyyy-MM-dd');
 
 const nasaUrl = `${NASA_API_NEO_URL}?start_date=${formattedStartDate}&end_date=${formattedEndDate}&api_key=${NASA_API_KEY}`;
-
-
-
 async function getAsteroids() {
     try {
       console.log(nasaUrl)
