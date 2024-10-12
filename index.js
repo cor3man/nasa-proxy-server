@@ -1,5 +1,5 @@
 const express = require('express');
-const { getMeteors } = require('./controller/meteorsController');
+const { getMeteors } = require('./controllers/meteorsController');
 require('dotenv').config();
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
