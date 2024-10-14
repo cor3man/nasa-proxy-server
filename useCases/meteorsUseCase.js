@@ -1,8 +1,14 @@
 const { getMeteorsData } = require('../repositories/meteorsRepository');
 const { format, startOfWeek, endOfWeek } = require('date-fns');
 
-const getFormattedMeteors = async () => {
-    const { start, end } = dateRangeForWeek(); 
+const getFormattedMeteors = async (start, end) => {
+
+    if (!start || !end) {
+        const { start: defaultStart, end: defaultEnd } = defaultDateRange();
+        start = defaultStart;
+        end = defaultEnd;
+    }
+     
     const asteroids = await getMeteorsData(start, end);
     
     return formatAsteroidsData(asteroids);
@@ -21,7 +27,7 @@ const formatAsteroidsData = (asteroids) => {
     );
 };
 
-const dateRangeForWeek = () => {
+const defaultDateRange = () => {
   const now = new Date();
   const startDate = startOfWeek(now, { weekStartsOn: 1 });
   const endDate = endOfWeek(now, { weekStartsOn: 1 });
