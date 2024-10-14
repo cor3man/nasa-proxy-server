@@ -15,12 +15,18 @@ const getMeteors = async (req, res) => {
       const isDangerous = dangerousMeteors === 'true';
       meteors = meteors.filter(meteor => meteor.is_potentially_hazardous_asteroid === isDangerous);
     }
-
-    if (count !== undefined) {
-      return res.json({ count: meteors.length });
+    
+    if (req.accepts('html')) {
+      if (count !== undefined) {
+        return res.render('meteors.njk', { count : meteors.length });
+      }
+      return res.render('meteors.njk', { meteors });
+    } else {
+      if (count !== undefined) {
+        return res.json({ count : meteors.length });
+      } 
+      return res.json(meteors);
     }
-
-    res.json(meteors);
 
   } catch (error) {
     console.error('Error while making the request:', error.message);

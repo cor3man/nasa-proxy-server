@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Meteors Data</title>
+    </head>
+    <body>
+        <h1>Meteorite Information</h1>
+        <ul>
+            {% if count %}
+                <strong>Count:</strong>
+                {{ count }} <br>
+            {% else %}
+                {% for meteor in meteors %}
+                    <li>
+                        <strong>ID:</strong>
+                        {{ meteor.id }} <br>
+                        <strong>Name:</strong>
+                        {{ meteor.name }} <br>
+                        <strong>Diameter (meters):</strong>
+                        {{ meteor.diameter.estimated_diameter_min }} - {{ meteor.diameter.estimated_diameter_max }} <br>
+                        <strong>Potentially Hazardous:</strong>
+                        {{ meteor.is_potentially_hazardous_asteroid }} <br>
+                        <strong>Close Approach Date:</strong>
+                        {{ meteor.close_approach_date_full }} <br>
+                        <strong>Relative Velocity (km/s):</strong>
+                        {{ meteor.relative_velocity }}
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </body>
+</html>
