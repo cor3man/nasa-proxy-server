@@ -9,12 +9,19 @@ const getLatestRoverImage = async (apiKey) => {
       api_key: apiKey
     }
   });
+  const response = await axios.get(NASA_API_ROVER_URL, {
+    params: {
+      api_key: apiKey
+    }
+  });
 
   const photos = response.data.latest_photos;
   if (photos.length === 0) {
     throw new CustomException(204, 'No photos available.');
   }
 
+  const latestPhoto = photos[0];
+  return latestPhoto.img_src;
   const latestPhoto = photos[0];
   return latestPhoto.img_src;
 };
