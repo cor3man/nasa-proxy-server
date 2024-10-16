@@ -1,11 +1,12 @@
 const { getRoverImage } = require('../useCases/roverUseCase');
+const CustomException = require('../errors/CustomException');
 
-const getRoverImageForUser = async (req, res) => {
+const getRoverImageForUser = async (req, res, next) => {
     try {
         const { userId, userName, userApiKey } = req.body;
 
         if (!userId || !userName || !userApiKey) {
-            return res.status(400).json({ error: 'Missing required user data' });
+            return next(new CustomException(400, 'Missing required user data'));
         }
 
         const roverImage = await getRoverImage(userApiKey);
@@ -19,8 +20,7 @@ const getRoverImageForUser = async (req, res) => {
         }
 
     } catch (error) {
-        console.error('Error fetching rover image:', error.message);
-        res.status(500).json({ error: 'Failed to fetch rover image' });
+        next(error)
     }
 };
 
