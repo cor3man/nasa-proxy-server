@@ -1,5 +1,9 @@
 const { getRoverImage } = require('../useCases/roverUseCase');
 
+const getForm = (req, res) => {
+    res.render('form.njk');
+};
+
 const getRoverImageForUser = async (req, res, next) => {
     try {
         const { userId, userName, userApiKey } = req.body;
@@ -18,4 +22,4 @@ const getRoverImageForUser = async (req, res, next) => {
     }
 };
 
-module.exports = { getRoverImageForUser };
+module.exports = { getRoverImageForUser, getForm };
