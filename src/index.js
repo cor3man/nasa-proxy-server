@@ -4,6 +4,8 @@ const { getMeteors } = require('./controllers/meteorsController');
 const { getRoverImageForUser } = require('./controllers/roverController');
 const { PORT } = require('./configurations/config');
 const nunjucks = require('nunjucks');
+const validateSchema = require('./validations/validationMiddleware');
+const roverSchema = require('./validations/roverSchema');
 
 const app = express();
 
@@ -15,7 +17,7 @@ nunjucks.configure('../views', {
 });
 
 app.get('/meteors', getMeteors);
-app.post('/rover-image', getRoverImageForUser);
+app.post('/rover-image', validateSchema(roverSchema), getRoverImageForUser);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
