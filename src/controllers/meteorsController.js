@@ -1,15 +1,15 @@
-const { getFormattedMeteors } = require('../useCases/meteorsUseCase');
-const { format, parseISO } = require('date-fns');
+import { format, parseISO } from 'date-fns';
+import { getFormattedMeteors } from '../useCases/meteorsUseCase.js';
 
-const getMeteors = async (req, res, next) => {
+export const getMeteors = async (req, res, next) => {
   try {
     const { date, count, 'were-dangerous-meteors': dangerousMeteors } = req.query;
 
-    const [start_date, end_date] = date ? date.split('/') : [null, null];
-    const formattedStartDate = start_date ? format(parseISO(start_date), 'yyyy-MM-dd') : null;
-    const formattedEndDate = end_date ? format(parseISO(end_date), 'yyyy-MM-dd') : null;
+    const [startDate, endDate] = date ? date.split('/') : [null, null];
+    const formattedStartDate = startDate ? format(parseISO(startDate), 'yyyy-MM-dd') : null;
+    const formattedEndDate = endDate ? format(parseISO(endDate), 'yyyy-MM-dd') : null;
 
-    var meteors = await getFormattedMeteors(formattedStartDate, formattedEndDate);
+    let meteors = await getFormattedMeteors(formattedStartDate, formattedEndDate);
 
     if (dangerousMeteors !== undefined) {
       const isDangerous = dangerousMeteors === 'true';
@@ -33,4 +33,3 @@ const getMeteors = async (req, res, next) => {
   }
 };
 
-module.exports = { getMeteors };

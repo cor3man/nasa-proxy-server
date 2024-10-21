@@ -1,13 +1,16 @@
-const axios = require('axios');
-const { NASA_API_URL } = require('../configurations/config');
-const NASA_API_ROVER_URL = NASA_API_URL + '/mars-photos/api/v1/rovers/curiosity/latest_photos';
-const CustomException = require('../errors/CustomException')
+import axios from 'axios';
+import config from '../configurations/config.js';
+import { CustomException } from '../errors/CustomException.js';
+
+const { NASA_API_URL } = config;
+const NASA_API_ROVER_URL = `${NASA_API_URL}/mars-photos/api/v1/rovers/curiosity/latest_photos`;
 
 const getLatestRoverImage = async (apiKey) => {
   const response = await axios.get(NASA_API_ROVER_URL, {
     params: {
-      api_key: apiKey
-    }
+      // eslint-disable-next-line camelcase
+      api_key: apiKey,
+    },
   });
 
   const photos = response.data.latest_photos;
@@ -19,4 +22,4 @@ const getLatestRoverImage = async (apiKey) => {
   return latestPhoto.img_src;
 };
 
-module.exports = { getLatestRoverImage };
+export default getLatestRoverImage;

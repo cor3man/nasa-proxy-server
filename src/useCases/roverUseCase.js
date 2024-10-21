@@ -1,8 +1,6 @@
-const { getLatestRoverImage } = require('../repositories/roverRepository');
+import getLatestRoverImage from '../repositories/roverRepository.js';
 
-const getRoverImage = async (userApiKey) => {
+export const getRoverImage = async (userApiKey) => {
   const roverImage = await getLatestRoverImage(userApiKey);
   return roverImage;
 };
-
-module.exports = { getRoverImage };

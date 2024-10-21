@@ -1,16 +1,18 @@
-const express = require('express');
-const errorHandler = require('./errors/errorHandler');
-const { getMeteors } = require('./controllers/meteorsController');
-const { getForm, getRoverImageForUser } = require('./controllers/roverController');
-const { PORT } = require('./configurations/config');
-const nunjucks = require('nunjucks');
-const validateSchema = require('./validations/validationMiddleware');
-const roverSchema = require('./validations/roverSchema');
+import express from 'express';
+import nunjucks from 'nunjucks';
+import { errorHandler } from './errors/errorHandler.js';
+import { getMeteors } from './controllers/meteorsController.js';
+import { getForm, getRoverImageForUser } from './controllers/roverController.js';
+import config from './configurations/config.js';
+import { validateSchema } from './validations/validationMiddleware.js';
+import { roverSchema } from './validations/roverSchema.js';
+
+const { PORT } = config;
 
 const app = express();
 nunjucks.configure('../views', {
-	autoescape: true,
-	express: app
+  autoescape: true,
+  express: app,
 });
 
 app.use(express.json());
@@ -23,5 +25,5 @@ app.post('/rover-image', validateSchema(roverSchema), getRoverImageForUser);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-	console.log(`The server is running on http://localhost:${PORT}`);
+  console.log(`The server is running on http://localhost:${PORT}`);
 });

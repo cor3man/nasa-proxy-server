@@ -1,14 +1,9 @@
-const Joi = require('joi');
-const CustomException = require('../errors/CustomException');
+import { CustomException } from '../errors/CustomException.js';
 
-const validateSchema = (schema) => {
-    return (req, res, next) => {
-        const { error } = schema.validate(req.body);
-        if (error) {
-            return next(new CustomException(400, error.details[0].message));
-        }
-        next();
-    };
+export const validateSchema = (schema) => (req, _res, next) => {
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return next(new CustomException(400, error.details[0].message));
+  }
+  return next();
 };
-
-module.exports = validateSchema;

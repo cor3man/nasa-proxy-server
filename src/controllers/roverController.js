@@ -1,12 +1,12 @@
-const { getRoverImage } = require('../useCases/roverUseCase');
+import { getRoverImage } from '../useCases/roverUseCase.js';
 
-const getForm = (req, res) => {
+export const getForm = (req, res) => {
     res.render('form.njk');
 };
 
-const getRoverImageForUser = async (req, res, next) => {
+export const getRoverImageForUser = async (req, res, next) => {
     try {
-        const { userId, userName, userApiKey } = req.body;
+        const { userApiKey } = req.body;
         const roverImage = await getRoverImage(userApiKey);
 
         if (req.accepts('html')) {
@@ -21,5 +21,3 @@ const getRoverImageForUser = async (req, res, next) => {
         next(error)
     }
 };
-
-module.exports = { getRoverImageForUser, getForm };

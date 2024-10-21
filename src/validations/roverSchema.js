@@ -1,9 +1,7 @@
-const Joi = require('joi');
+import joi from 'joi';
 
-const roverSchema = Joi.object({
-    userId: Joi.string().required(),
-    userName: Joi.string().required(),
-    userApiKey: Joi.string().required(),
+export const roverSchema = joi.object({
+  userId: joi.string().required(),
+  userName: joi.string().required(),
+  userApiKey: joi.string().required(),
 });
-
-module.exports = roverSchema;
